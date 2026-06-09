@@ -38,6 +38,8 @@ jobs:
           echo "Checking .env.test file:"
           cat .env.test | sed 's/=.*/=***/' 
           echo ""
+          echo "NODE_ENV=$NODE_ENV"
+          echo "CI=$CI"
           echo "DATABASE_URL secret exists: ${{ secrets.DATABASE_URL != '' }}"
           echo "NEXTAUTH_SECRET secret exists: ${{ secrets.NEXTAUTH_SECRET != '' }}"
           echo "NEXTAUTH_URL secret exists: ${{ secrets.NEXTAUTH_URL != '' }}"

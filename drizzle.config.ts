@@ -1,8 +1,12 @@
 import { defineConfig } from "drizzle-kit"
+import { existsSync } from "node:fs"
 import * as dotenv from "dotenv"
 
-// Load .env.test in test environment, otherwise .env.local
-const envFile = process.env.NODE_ENV === "test" ? ".env.test" : ".env.local"
+// In CI and tests, prefer .env.test when it exists. Otherwise use .env.local.
+const useTestEnv =
+  process.env.NODE_ENV === "test" ||
+  (process.env.CI === "true" && existsSync(".env.test"))
+const envFile = useTestEnv && existsSync(".env.test") ? ".env.test" : ".env.local"
 dotenv.config({ path: envFile })
 
 export default defineConfig({
