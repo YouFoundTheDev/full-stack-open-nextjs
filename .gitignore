@@ -10,3 +10,6 @@ yarn-error.log*
 pnpm-debug.log*
 .vercel
 .env*.local
+.env.test
+test-results/
+playwright-report/

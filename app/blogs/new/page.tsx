@@ -82,9 +82,10 @@ export default function NewBlogPage() {
 
         <button
           type="submit"
+          data-testid="create-blog-button"
           className="w-fit rounded-full bg-stone-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-stone-800"
         >
-          Create blog
+          Create
         </button>
       </form>
     </section>

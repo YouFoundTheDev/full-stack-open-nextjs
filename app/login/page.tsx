@@ -3,10 +3,12 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useNotification } from "../components/NotificationContext";
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const { showNotification } = useNotification();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,6 +25,7 @@ export default function LoginPage() {
       return;
     }
 
+    showNotification("login successful");
     router.push("/");
     router.refresh();
   };
@@ -56,12 +59,16 @@ export default function LoginPage() {
           />
         </label>
         {error && (
-          <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+          <p
+            data-testid="error-message"
+            className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"
+          >
             {error}
           </p>
         )}
         <button
           type="submit"
+          data-testid="login-button"
           className="w-fit rounded-full bg-stone-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-stone-800"
         >
           Login

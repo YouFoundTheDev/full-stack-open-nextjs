@@ -66,6 +66,8 @@ export async function createApiToken() {
     redirect("/login");
   }
 
-  await generateUserToken(user.id, crypto.randomUUID());
+  const token = crypto.randomUUID();
+  await generateUserToken(user.id, token);
   revalidatePath("/me");
+  return token;
 }
