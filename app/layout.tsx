@@ -1,4 +1,7 @@
-import Link from "next/link";
+import NavBar from "./components/NavBar";
+import Notification from "./components/Notification";
+import { NotificationProvider } from "./components/NotificationContext";
+import AuthSessionProvider from "./components/SessionProvider";
 import "./globals.css";
 
 export const metadata = {
@@ -13,14 +16,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <nav className="site-nav">
-          <Link href="/">Home</Link>
-          <Link href="/blogs">Blogs</Link>
-          <Link href="/users">Users</Link>
-          <Link href="/blogs/new">New Blog</Link>
-        </nav>
-        <main>{children}</main>
+      <body className="min-h-screen bg-background text-foreground">
+        <AuthSessionProvider>
+          <NotificationProvider>
+            <NavBar />
+            <main className="mx-auto max-w-5xl px-4 py-8">
+              <Notification />
+              {children}
+            </main>
+          </NotificationProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );

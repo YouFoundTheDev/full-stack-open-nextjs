@@ -1,13 +1,8 @@
 import { asc, eq } from "drizzle-orm";
-import { getDb } from "../../db";
-import { blogs, users } from "../../db/schema";
+import { getDb } from "@/db";
+import { blogs, readingList, users } from "@/db/schema";
 
 export type User = typeof users.$inferSelect;
-
-const DEFAULT_USER = {
-  username: "course-user",
-  name: "Course User",
-};
 
 export const getUsers = async () => {
   const db = getDb();
@@ -30,20 +25,30 @@ export const getUserWithBlogs = async (username: string) => {
   });
 };
 
-export const ensureDefaultUser = async () => {
+export const getUserByToken = async (token: string) => {
   const db = getDb();
-  const existingUser = await db.query.users.findFirst({
-    where: eq(users.username, DEFAULT_USER.username),
+
+  return db.query.users.findFirst({
+    where: eq(users.token, token),
   });
+};
 
-  if (existingUser) {
-    return existingUser;
-  }
+export const getUserWithReadingList = async (id: number) => {
+  const db = getDb();
 
-  const [createdUser] = await db
-    .insert(users)
-    .values(DEFAULT_USER)
-    .returning();
-
-  return createdUser;
+  return db.query.users.findFirst({
+    where: eq(users.id, id),
+    with: {
+      readingList: {
+        with: {
+          blog: {
+            with: {
+              user: true,
+            },
+          },
+        },
+        orderBy: [asc(readingList.id)],
+      },
+    },
+  });
 };
