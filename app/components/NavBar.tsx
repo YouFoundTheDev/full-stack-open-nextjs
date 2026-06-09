@@ -7,7 +7,7 @@ export default function NavBar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="border-b border-stone-800 bg-stone-950/95">
+    <nav className="border-b border-stone-700 bg-stone-950 text-white shadow-sm">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-2 px-4 py-3">
         <NavLink href="/">home</NavLink>
         <NavLink href="/blogs">blogs</NavLink>
@@ -17,13 +17,13 @@ export default function NavBar() {
         <div className="ml-auto flex items-center gap-3">
           {session ? (
             <>
-              <em className="text-sm text-stone-300">
+              <em className="text-sm text-stone-200">
                 {session.user?.name} logged in
               </em>
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="rounded-full border border-stone-700 bg-stone-900 px-4 py-2 text-sm font-semibold text-stone-100 transition hover:border-stone-500 hover:bg-stone-800"
+                className="rounded-full border border-stone-500 bg-stone-800 px-4 py-2 text-sm font-semibold text-white transition hover:border-stone-300 hover:bg-stone-700"
               >
                 logout
               </button>
