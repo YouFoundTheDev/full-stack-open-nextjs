@@ -17,6 +17,7 @@ export default function RootLayout({
         <nav className="site-nav">
           <Link href="/">Home</Link>
           <Link href="/blogs">Blogs</Link>
+          <Link href="/users">Users</Link>
           <Link href="/blogs/new">New Blog</Link>
         </nav>
         <main>{children}</main>
